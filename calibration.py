@@ -14,8 +14,13 @@ checkerboard printed from: http://clipart-library.com/clipart/6ipokG9AT.htm
 2) put all images into working directory
 3) import this .py file and run:
     calibration.calibrate(corners_height, corners_width)
+    if you leave the parameters blank the default is 6,8 wich are the 
+    correct parameters for the checkerbaord given above
+4) replace the DIM K and D values in this file with the ones that calibration.calibrate()
+   gives you for your lense
 
-
+5) to dewarp a single frame or image call:
+   calibration.dewarp(img)
 
 
 Calibrate Function:
@@ -31,12 +36,37 @@ these arrays are unique to the lense and can be used to undistort
 any image that the lense creates
 
 
+dewarp function:
+
+Make sure that you have updated the K D and DIM values to their 
+proper dimensions in this file
+
+Parameter: an image or frame to dewarp
+Returns: a dewarped image
+
+
 """
 
 import cv2
 import numpy as np
 import os
 import glob
+
+
+#these are example dimensions for a GOPRO hero 3 that should be replaced after 
+#calibration.calibrate() is done on your own lense 
+DIM=(1920, 1080)
+K=np.array([[1209.4636416230867, 0.0, 1294.5846820755305], [0.0, 1208.7544583141064, 978.4039362891001], [0.0, 0.0, 1.0]])
+D=np.array([[0.02087909969265743], [-0.08509281826480271], [0.19554990995705712], [-0.12830059111751368]])
+
+
+
+def dewarp(img):
+
+    map1, map2 = cv2.fisheye.initUndistortRectifyMap(K, D, np.eye(3), K, DIM, cv2.CV_16SC2)
+    undistorted_img = cv2.remap(img, map1, map2, interpolation=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+    return undistorted_img
+
 
 
 
