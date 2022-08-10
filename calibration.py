@@ -1,11 +1,42 @@
 
+
+"""
+
+Usage:
+
+To get the unique K and D array values for a lense
+1) collect images of a black and white checkerboard at multiple angles
+   with lense. Make sure that the checkerboard is flat while you are 
+   collecting images
+
+checkerboard printed from: http://clipart-library.com/clipart/6ipokG9AT.htm
+
+2) put all images into working directory
+3) import this .py file and run:
+    calibration.calibrate(corners_height, corners_width)
+
+
+
+
+Calibrate Function:
+
+Make sure that the images of the checkerbaord are present in 
+the working directory
+
+the calibrate function takes the number of corners of our test 
+checkerboard's height and width as parameters.
+
+the calibrate function will return the array values of K and D 
+these arrays are unique to the lense and can be used to undistort 
+any image that the lense creates
+
+
+"""
+
 import cv2
 import numpy as np
 import os
 import glob
-
-
-
 
 
 
